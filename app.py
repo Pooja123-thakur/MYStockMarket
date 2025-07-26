@@ -3,7 +3,13 @@ import requests
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["*"],
+        "methods": ["GET"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 API_KEY = 'CR217__olohp7Kc0qabokhzhK8pnqr7S'
 
@@ -109,8 +115,9 @@ def home():
 def get_data():
     ticker = request.args.get('ticker', 'AAPL').upper()
     data = fetch_stock_data(ticker)
-    return jsonify(data)
-
+    response = jsonify(data)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == "__main__":
     app.run(debug=True)
