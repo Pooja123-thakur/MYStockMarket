@@ -1,5 +1,9 @@
 from flask import Flask, render_template, jsonify, request
 import requests
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app = Flask(__name__)
 API_KEY = 'CR217__olohp7Kc0qabokhzhK8pnqr7S'
